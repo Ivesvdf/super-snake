@@ -33,6 +33,9 @@ private:
 	const int boardWidth;
 	const int boardHeight;
 
+	const int maxBonusses;
+	int bonusses;
+
 	vector< vector<Cell> > *array;
 };
 
