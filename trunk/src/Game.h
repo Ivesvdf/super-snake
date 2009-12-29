@@ -36,6 +36,8 @@ private:
 	const int maxBonusses;
 	int bonusses;
 
+	int length;
+
 	vector< vector<Cell> > *array;
 };
 

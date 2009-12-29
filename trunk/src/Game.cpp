@@ -108,6 +108,8 @@ void Game::play()
 
 	Timer timer;
 
+	length = 3;
+
 	int addLength = 0;
 
 	while (true)
@@ -146,8 +148,8 @@ void Game::play()
 		Cell nextPos = getCell(head);
 		setCell(head, HEAD);
 
-		// move tail if addLength != 0
-		if(addLength != 0)
+		// move tail if addLength == 0
+		if(addLength == 0)
 		{
 			Cell dir = getCell(tail);
 
@@ -158,6 +160,7 @@ void Game::play()
 		else
 		{
 			addLength--;
+			length++;
 		}
 
 		// if we hit a wall, quit game!
@@ -165,7 +168,7 @@ void Game::play()
 		{
 			if(nextPos == BONUS)
 			{
-				addLength++;
+				addLength = length / 2;
 				bonusses--;
 			}
 			else
