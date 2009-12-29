@@ -170,6 +170,7 @@ int main()
 			return 1;
 		}
 		Cell nextPos = array[head.y()][head.x()];
+		mvwprintw(screen, head.y(),head.x(), "X");
 		array[head.y()][head.x()] = HEAD;
 
 		// move tail if addLength != 0
@@ -195,19 +196,7 @@ int main()
 		}
 
 
-		for(int y = 0; y < array.size(); y++)
-		{
-			for(int x = 0; x < array[y].size(); x++)
-			{
-				if(array[y][x] != EMPTY)
-				{
-					if(array[y][x] == BONUS)
-						mvwprintw(screen, y,x, "B");
-					else
-						mvwprintw(screen, y,x, "X");
-				}
-			}
-		}
+
 		while(timer.poll() < 0.1)
 		{
 			sleep(0.1-timer.poll());
@@ -225,6 +214,7 @@ int main()
 			while(array[y][x] != EMPTY);
 
 			array[y][x] = BONUS;
+			mvwprintw(screen, y, x, "B");
 
 
 		}
