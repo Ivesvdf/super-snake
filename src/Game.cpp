@@ -53,6 +53,8 @@ Game::~Game()
 void Game::setCell(Position pos, Cell what)
 {
 	(*array)[pos.y()][pos.x()] = what;
+
+	drawRel(pos,what);
 }
 
 Cell Game::getCell(Position pos) const
@@ -129,7 +131,6 @@ void Game::play()
 
 		// move head
 		setCell(head, direction);
-		drawRel(head, direction);
 		head.move(direction);
 
 		//Test if head is out of bounds
@@ -140,7 +141,6 @@ void Game::play()
 
 		// Move head
 		Cell nextPos = getCell(head);
-		drawRel(head, HEAD);
 		setCell(head, HEAD);
 
 		// move tail if addLength != 0
@@ -149,7 +149,6 @@ void Game::play()
 			Cell dir = getCell(tail);
 
 			setCell(tail, EMPTY);
-			drawRel(tail, EMPTY);
 
 			tail.move(dir);
 		}
@@ -186,7 +185,6 @@ void Game::play()
 			while(getCell(Position(x,y)) != EMPTY);
 
 			setCell(Position(x,y), BONUS);
-			drawRel(Position(x,y), BONUS);
 		}
 
 		timer.reset();
