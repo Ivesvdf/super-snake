@@ -1,0 +1,7 @@
+*.d
+*.o
+supersnake
+*.~
+.cproject
+.project
+
