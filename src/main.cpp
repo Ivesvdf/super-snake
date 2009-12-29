@@ -7,10 +7,11 @@
 #ifdef __unix__
 #include <unistd.h>
 #include <sys/time.h>
-
-
-
 #endif
+
+#include "Timer.h"
+#include "Position.h"
+#include "Cell.h"
 
 
 using std::vector;
@@ -19,73 +20,6 @@ int current_getch;
 static WINDOW *mainwnd;
 static WINDOW *screen;
 WINDOW *my_win;
-
-enum Cell { UP, DOWN, LEFT, RIGHT, HEAD, EMPTY, WALL, BONUS};
-
-#ifdef __unix__
-class Timer
-{
-public:
-	Timer(): last(new timeval), cur(new timeval){ gettimeofday(last, 0);}
-	~Timer(){ delete cur; delete last; }
-
-	double poll() const
-	{
-		gettimeofday(cur, 0);
-		return cur->tv_sec-last->tv_sec + (cur->tv_usec - last->tv_usec)/1000000.0;
-	}
-
-	double reset()
-	{
-		double time = poll();
-		*last = *cur;
-		return time;
-	}
-
-private:
-    timeval *last;
-    timeval *cur;
-
-};
-#endif
-
-
-
-class Position
-{
-public:
-	Position(int ix, int iy): fx(ix), fy(iy) {}
-
-	/**
-	 * Will move current coordinates in the direction
-	 * in c.
-	 * @param c Either UP, DOWN, LEFT or RIGHT
-	 */
-	void move(Cell c)
-	{
-		switch(c)
-		{
-		case UP:
-			fy--;
-			break;
-		case DOWN:
-			fy++;
-			break;
-		case LEFT:
-			fx--;
-			break;
-		case RIGHT:
-			fx++;
-			break;
-		}
-	}
-
-	int x() const { return fx; }
-	int y() const { return fy; }
-private:
-	int fx,fy;
-};
-
 
 #ifdef __unix__
 	void sleep(double seconds)
