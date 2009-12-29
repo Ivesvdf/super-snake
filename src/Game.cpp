@@ -30,7 +30,8 @@ Game::Game():
 
 	srand(time(0));
 
-	screen = newwin(boardHeight+1, boardWidth+1, 0, 0);
+	// 1 character left, right, up and down is required to delimit the playing field
+	screen = newwin(boardHeight+2, boardWidth+2, 0, 0);
 	box(screen, ACS_VLINE, ACS_HLINE);
 	nodelay(screen, TRUE);
 
@@ -167,10 +168,19 @@ void Game::play()
 		}
 
 
+		double pauzeTime = 0;
 
-		while(timer.poll() < 0.1)
+		// Since characters are higher than they are wide, if we would pauze the same amount
+		// of time in both directions, the snake would go up and down incredibly fast en left to
+		// right incredibly slow.
+		if((direction == LEFT) || (direction == RIGHT))
+			pauzeTime = 0.1;
+		else
+			pauzeTime = 0.16;
+
+		while(timer.poll() < pauzeTime)
 		{
-			sleep(0.1-timer.poll());
+			sleep(pauzeTime-timer.poll());
 		}
 
 		if(rand()% static_cast<int>(5.0/timer.poll()) == 0)
