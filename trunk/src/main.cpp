@@ -1,5 +1,5 @@
-#include <curses.h>
 #include <vector>
+#include <curses.h>
 
 #include <cstdio>
 #include <cstdlib>
