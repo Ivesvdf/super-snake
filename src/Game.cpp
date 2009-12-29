@@ -15,7 +15,9 @@
 Game::Game():
 	mainwnd(initscr()),
 	boardWidth(78),
-	boardHeight(22)
+	boardHeight(22),
+	maxBonusses(3),
+	bonusses(0)
 
 {
 
@@ -162,7 +164,10 @@ void Game::play()
 		if(nextPos != EMPTY)
 		{
 			if(nextPos == BONUS)
+			{
 				addLength++;
+				bonusses--;
+			}
 			else
 				return;
 		}
@@ -183,18 +188,24 @@ void Game::play()
 			sleep(pauzeTime-timer.poll());
 		}
 
-		if(rand()% static_cast<int>(5.0/timer.poll()) == 0)
+		// Only put a new bonus on the screen if there are < max bonusses on screen already
+		if(bonusses < maxBonusses)
 		{
-			// Place bonus
-			int x,y;
-			do
+			// If we're lucky, place new bonus
+			if(rand()% static_cast<int>(5.0/timer.poll()) == 0)
 			{
-				x = rand()%boardWidth;
-				y = rand()%boardHeight;
-			}
-			while(getCell(Position(x,y)) != EMPTY);
+				// Place bonus
+				int x,y;
+				do
+				{
+					x = rand()%boardWidth;
+					y = rand()%boardHeight;
+				}
+				while(getCell(Position(x,y)) != EMPTY);
 
-			setCell(Position(x,y), BONUS);
+				setCell(Position(x,y), BONUS);
+				bonusses++;
+			}
 		}
 
 		timer.reset();
