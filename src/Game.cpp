@@ -10,6 +10,7 @@
 #include <ctime>
 #include "Game.h"
 #include "Timer.h"
+#include "Sleep.h"
 
 
 Game::Game():
@@ -188,7 +189,7 @@ void Game::play()
 
 		while(timer.poll() < pauzeTime)
 		{
-			sleep(pauzeTime-timer.poll());
+			sleepSec(pauzeTime-timer.poll());
 		}
 
 		// Only put a new bonus on the screen if there are < max bonusses on screen already
